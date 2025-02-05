@@ -1,0 +1,7 @@
+[package]
+name = "ai-cli"
+
+edition.workspace = true
+version.workspace = true
+
+[dependencies]

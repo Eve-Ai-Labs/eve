@@ -1,0 +1,8 @@
+[package]
+name = "ai-node"
+
+edition.workspace = true
+version.workspace = true
+
+[dependencies]
+
