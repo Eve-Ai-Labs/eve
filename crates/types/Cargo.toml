@@ -1,0 +1,19 @@
+[package]
+name = "types"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+bincode.workspace = true
+crypto.workspace = true
+eyre.workspace = true
+multiaddr.workspace = true
+rand.workspace = true
+serde = {workspace = true, features = ["derive"]}
+url.workspace = true
+hex.workspace = true
+
+[lints]
+workspace = true

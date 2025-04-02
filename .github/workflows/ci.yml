@@ -1,0 +1,87 @@
+name: CI Checks
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+
+env: 
+  CARGO_TERM_COLOR: always
+  RUST_VERSION: stable
+
+jobs:
+  checks:
+    name: Checks
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      # rust toolchain
+      - name: Rust cache
+        id: cache-rustup
+        uses: "actions/cache@v4"
+        with:
+          path: |
+            /root/.rust/
+             ~/.cargo
+          key: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cache-${{ hashFiles('**/Cargo.lock') }}
+      - name: Install rustc
+        run: rustup update $RUST_VERSION && rustup default $RUST_VERSION
+      # Clippy
+      - name: Run Clippy
+        run: cargo clippy --no-deps --all-targets -- -Dwarnings
+      # Tests
+      - name: Execute all the tests
+        run: cargo test
+
+  wasm:
+    name: Wasm build
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      # cache
+      - name: Rust cache
+        id: cache-fmt-rustup
+        uses: "actions/cache@v4"
+        with:
+          path: |
+            /root/.rust/
+            ~/.cargo
+          key: ${{ runner.os }}-wasm-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-wasm-${{ hashFiles('**/Cargo.lock') }}
+      # install rust
+      - name: Install rustc
+        run: rustup update $RUST_VERSION && rustup default $RUST_VERSION
+      - name: target add wasm32
+        run: rustup target add wasm32-unknown-unknown
+      # install wasm-pack
+      - name: Install wasm-pack
+        run: cargo install wasm-pack
+      # build
+      - name: Build wasm
+        run: make build
+        working-directory: web-node
+
+  fmt:
+    name: FMT with nightly
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: actions/checkout@v4
+      # rust toolchain
+      - name: Rust cache
+        id: cache-fmt-rustup
+        uses: "actions/cache@v4"
+        with:
+          path: |
+            /root/.rust/
+             ~/.cargo
+          key: ${{ runner.os }}-fmt-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-fmt-${{ hashFiles('**/Cargo.lock') }}
+      - name: Install rustc nightly
+        run: rustup update nightly
+      # fmt
+      - name: Run rustfmt in check mode
+        run: cargo +nightly fmt --check --all
+     

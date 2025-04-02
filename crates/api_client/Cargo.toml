@@ -1,0 +1,23 @@
+[package]
+edition.workspace = true
+name = "orchestrator_client"
+version.workspace = true
+license.workspace = true
+
+[dependencies]
+# local
+crypto.workspace = true
+types.workspace = true
+
+eyre.workspace = true
+jwt.workspace = true
+reqwest = {workspace = true, features = ["json"]}
+serde.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+
+[features]
+time = []
+
+[lints]
+workspace = true

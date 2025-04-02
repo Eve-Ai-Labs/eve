@@ -1,0 +1,38 @@
+[package]
+name = "ai"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+node-config.workspace = true
+types.workspace = true
+
+eyre.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+backon = {workspace = true, optional = true}
+ollama-rs = {workspace = true, optional = true}
+rand = {workspace = true, optional = true}
+ratelimit = {workspace = true, optional = true}
+reqwest = {workspace = true, optional = true}
+tokio = {workspace = true, features = ["sync"], optional = true}
+
+[dev-dependencies]
+tracing-subscriber.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+default = []
+ollama = [
+  "backon",
+  "ollama-rs",
+  "rand",
+  "ratelimit",
+  "reqwest",
+  "tokio",
+]

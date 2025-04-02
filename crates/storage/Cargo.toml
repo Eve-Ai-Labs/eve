@@ -1,0 +1,31 @@
+[package]
+name = "storage"
+
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+
+[dependencies]
+crypto.workspace = true
+node-config.workspace = true
+types.workspace = true
+
+bincode.workspace = true
+eyre.workspace = true
+poem = {workspace = true, optional = true}
+rocksdb.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+multiaddr.workspace = true
+
+[dev-dependencies]
+rand.workspace = true
+tracing-subscriber.workspace = true
+tempdir.workspace = true
+
+[features]
+err_poem = ["dep:poem"]
+
+[lints]
+workspace = true

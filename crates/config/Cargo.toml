@@ -1,0 +1,20 @@
+[package]
+name = "node-config"
+
+edition = "2021"
+version = "0.1.0"
+license.workspace = true
+
+[dependencies]
+crypto.workspace = true
+types.workspace = true
+
+eyre.workspace = true
+jwt.workspace = true
+libp2p.workspace = true
+serde = {workspace = true, features = ["derive"]}
+serde_yaml.workspace = true
+url.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,21 @@
+[package]
+name = "bot"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+clap.workspace = true
+eyre.workspace = true
+crypto.workspace = true
+
+orchestrator_client = {workspace = true, features = ["time"]}
+tokio = {workspace = true, features = ["macros", "rt-multi-thread"]}
+tracing-subscriber.workspace = true
+tracing.workspace = true
+types.workspace = true
+url.workspace = true
+
+[lints]
+workspace = true

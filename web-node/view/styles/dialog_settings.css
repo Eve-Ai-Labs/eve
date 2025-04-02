@@ -1,0 +1,84 @@
+#dialog_settings .bd .row.private_key label input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+#dialog_settings .content {
+  padding-top: 90px;
+}
+#dialog_settings .generate-button {
+  height: 56px;
+  width: 56px;
+  margin: 0;
+  background-color: var(--link-hover-text-color);
+  color: var(--default-bg);
+  border-color: var(--link-hover-text-color);
+  text-align: center;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+#dialog_settings svg {
+  display: inline-block;
+  width: 21px;
+  height: 100%;
+  position: relative;
+}
+#dialog_settings svg * {
+  fill: var(--default-bg);
+}
+
+#dialog_settings .import-button input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+#dialog_settings .preloader {
+  display: none;
+}
+#dialog_settings.load .preloader {
+  display: block;
+}
+
+#dialog_settings .menu-toolbar {
+  position: absolute;
+  top: 16px;
+  left: 30px;
+  width: auto;
+  display: flex;
+  flex-wrap: nowrap;
+}
+#dialog_settings .menu-toolbar .btn {
+  display: flex;
+  justify-items: middle;
+  background-color: var(--default-bg);
+  border-color: transparent;
+  color: var(--default-text-color);
+  text-align: left;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 38px;
+  padding: 0 10px;
+  vertical-align: middle;
+}
+#dialog_settings .menu-toolbar .btn:hover {
+  color: var(--link-hover-text-color);
+}
+
+#dialog_settings .menu-toolbar svg {
+  margin-right: 5px;
+}
+#dialog_settings .menu-toolbar .import-button svg {
+  width: 17px;
+}
+#dialog_settings .menu-toolbar .export-button svg {
+  width: 18px;
+}
+#dialog_settings .menu-toolbar svg * {
+  fill: var(--default-text-color);
+}
+#dialog_settings .menu-toolbar .btn:hover svg * {
+  fill: var(--link-hover-text-color);
+}

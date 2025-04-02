@@ -1,0 +1,36 @@
+[package]
+name = "eve-node"
+
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+
+[dependencies]
+# local
+ai = {workspace = true, features = ["ollama"]}
+cli_utils.workspace = true
+crypto.workspace = true
+node-config.workspace = true
+node.workspace = true
+orchestrator.workspace = true
+orchestrator_api.workspace = true
+p2p.workspace = true
+storage.workspace = true
+types.workspace = true
+orchestrator_client.workspace = true
+
+# crate
+clap = {workspace = true, features = ["derive"]}
+color-eyre.workspace = true
+futures.workspace = true
+jwt.workspace = true
+tempdir.workspace = true
+tokio = {workspace = true, features = ["macros", "rt-multi-thread"]}
+tracing-subscriber = {workspace = true, features = ["fmt", "env-filter"]}
+tracing.workspace = true
+url.workspace = true
+multiaddr.workspace = true
+termion.workspace = true
+
+[lints]
+workspace = true

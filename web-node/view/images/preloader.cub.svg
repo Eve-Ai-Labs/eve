@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 0 100 100"
+  preserveAspectRatio="xMidYMid"
+>
+  <rect x="15" y="15" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      values="#cccccc;#000000;#000000"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+  <rect x="39" y="15" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      values="#cccccc;#000000;#000000"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0.11682242990654206s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+  <rect x="63" y="15" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      values="#cccccc;#000000;#000000"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0.2336448598130841s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+  <rect x="15" y="39" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      values="#cccccc;#000000;#000000"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0.8177570093457943s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+  <rect x="63" y="39" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      values="#cccccc;#000000;#000000"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0.35046728971962615s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+  <rect x="15" y="63" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      values="#cccccc;#000000;#000000"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0.7009345794392523s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+  <rect x="39" y="63" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0.5841121495327103s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+  <rect x="63" y="63" width="22" height="22" fill="#000000">
+    <animate
+      attributeName="fill"
+      values="#cccccc;#000000;#000000"
+      keyTimes="0;0.125;1"
+      dur="0.9345794392523364s"
+      repeatCount="indefinite"
+      begin="0.4672897196261682s"
+      calcMode="discrete"
+    ></animate>
+  </rect>
+</svg>

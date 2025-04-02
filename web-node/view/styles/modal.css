@@ -1,0 +1,240 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal,
+.modal > .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.modal.-hide {
+  display: none;
+}
+
+.modal > .bg {
+  z-index: 1;
+  background-color: var(--default-bg);
+  opacity: 0.8;
+}
+
+.modal > .content {
+  position: relative;
+  z-index: 2;
+  padding: 48px 40px 48px;
+  max-width: 600px;
+  min-width: 403px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  border: 1px solid var(--border-primary);
+  border-radius: 0.25rem;
+  background-color: var(--default-bg);
+}
+
+.modal > .content .close {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  margin: 0;
+  padding: 5px 5px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background: transparent;
+  border-width: 0;
+}
+
+.modal > .content .close .close-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  transition: 0.25s;
+  stroke: var(--default-text-color);
+  opacity: 0.5;
+}
+
+.modal > .content .close:hover .close-icon {
+  opacity: 1;
+}
+
+.modal > .content > .header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  padding: 5px 10px;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+.modal > .content > .header .title {
+  font-size: 30px;
+  line-height: 32px;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
+  word-spacing: 0.3em;
+}
+
+.modal > .content .bd {
+  width: 100%;
+  max-height: 80vh;
+}
+
+.modal > .content .bd .row {
+  flex-grow: 1;
+  margin: 4px 0;
+  position: relative;
+}
+
+.modal > .content .bd .row {
+  display: flex;
+  align-items: center;
+}
+
+.modal > .content .bd .row .label {
+  position: absolute;
+  left: 22px;
+  top: 20px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 140%;
+  color: var(--default-text-color);
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.modal > .content .bd .row input[type="text"],
+.modal > .content .bd .row input[type="password"],
+.modal > .content .bd .row select {
+  width: 100%;
+  height: 56px;
+  outline: none;
+  font-size: 15px;
+  line-height: 120%;
+  padding: 0 35px 0 80px;
+  text-align: right;
+}
+
+.modal > .content .bd .row input[type="text"][readonly],
+.modal > .content .bd .row input[type="password"][readonly],
+.modal > .content .bd .row select[readonly] {
+  opacity: 0.7;
+}
+
+.modal > .content .bd .row input[type="text"].long-label,
+.modal > .content .bd .row input[type="password"].long-label,
+.modal > .content .bd .row select.long-label {
+  padding-left: 125px;
+}
+
+.modal > .content .bd .row input[type="text"]:hover,
+.modal > .content .bd .row input[type="password"]:hover,
+.modal > .content .bd .row select:hover {
+  cursor: pointer;
+}
+
+.modal > .content .bd .row input[type="checkbox"] {
+  position: absolute;
+  z-index: -1;
+  opacity: 0 !important;
+}
+
+.modal > .content .bd .row input[type="checkbox"] + label::before {
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
+  top: 19px;
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  flex-grow: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+  outline: none;
+}
+
+.modal > .content .bd .row input[type="checkbox"]:checked + label::before {
+  border-color: var(--error-color);
+  background-color: var(--error-color);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.modal > .content .bd .row select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("../images/arrow-down-filled-triangle.svg");
+  background-size: 10px;
+  background-position: calc(100% - 24px);
+  background-repeat: no-repeat;
+  padding-right: 50px;
+  /**
+   for safari select issue
+   */
+  direction: rtl;
+}
+
+.modal > .content .bd .row select:active {
+  direction: ltr;
+}
+
+.modal > .content .bd .description {
+  text-align: left;
+  font-size: 14px;
+  line-height: 140%;
+  margin-top: 20px;
+  letter-spacing: -0.03em;
+  opacity: 0.6;
+}
+
+.modal .footer {
+  display: flex;
+  margin-top: 20px;
+  flex: 1 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.modal .footer button {
+  margin: 0 5px;
+  min-width: 135px;
+}
+
+.modal .content .preloader {
+  display: none;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/preloader.cub.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 100px 100px;
+  background-color: var(--default-bg);
+}
+
+.modal.loading .preloader {
+  display: block;
+}

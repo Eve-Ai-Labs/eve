@@ -1,0 +1,27 @@
+[package]
+name = "jwt"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+futures.workspace = true
+headers.workspace = true
+hex.workspace = true
+http.workspace = true
+jsonwebtoken.workspace = true
+tower.workspace = true
+
+rand.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+jsonrpsee = {workspace = true, features = ["server", "http-client", "macros"]}
+reqwest.workspace = true
+serde_json.workspace = true
+tokio = {workspace = true, features = ["test-util"]}
+tower = {workspace = true, features = ["full"]}
+tracing-test.workspace = true
+tracing.workspace = true

@@ -1,0 +1,107 @@
+name: "Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: "The version to release"
+        required: true
+        default: "v0.0.0"
+      dry_run:
+        description: "Dry run - If checked, the release will not be created"
+        type: boolean
+        required: false
+        default: true
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_VERSION: stable
+
+jobs:
+
+  build-linux:
+    name: "Build for Linux"
+    runs-on: ubuntu-latest
+    env:
+      PLATFORM_NAME: "linux"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build binary
+        uses: ./.github/actions/build
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ env.PLATFORM_NAME }}
+          path: eve-*.zip
+
+  build-macos-arm64:
+    name: "Build for macOS arm64"
+    runs-on: macos-latest
+    env:
+      PLATFORM_NAME: "macos"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build binary
+        uses: ./.github/actions/build
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ env.PLATFORM_NAME }}-arm64
+          path: eve-*.zip
+
+  build-macos-x86_64:
+    name: "Build for macOS x86_64"
+    runs-on: macos-13
+    env:
+      PLATFORM_NAME: "macos"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build binary
+        uses: ./.github/actions/build
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ env.PLATFORM_NAME }}-x86_64
+          path: eve-*.zip
+
+  release-binaries:
+    name: "Release binaries"
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-macos-arm64, build-macos-x86_64]
+    permissions:
+      contents: "write"
+      pull-requests: "read"
+    if: ${{ inputs.dry_run }} == 'false' ||  ${{ github.event_name }} == 'push'
+    steps:
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          pattern: binary-*
+          merge-multiple: true
+
+      - name: Determine Release Version and Variables
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            RELEASE_VERSION="${{ github.event.inputs.release_version }}"
+          else
+            CARGO_PATH="Cargo.toml"
+            VERSION=$(sed -n '/^\w*version = /p' "$CARGO_PATH" | sed 's/^.*=[ ]*"//g' | sed 's/".*$//g')
+            RELEASE_VERSION="v$VERSION"
+          fi
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@919008cf3f741b179569b7a6fb4d8860689ab7f0
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ format('eve-{0}', env.RELEASE_VERSION) }}"
+          prerelease: false
+          title: "${{ format('Eve Release {0}', env.RELEASE_VERSION) }}"
+          files: |
+            eve-*.zip

@@ -1,0 +1,39 @@
+[package]
+name = "p2p"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+crypto.workspace = true
+node-config.workspace = true
+types.workspace = true
+
+bincode.workspace = true
+eyre.workspace = true
+futures = {workspace = true}
+rand.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+libp2p = {workspace = true, features = ["tokio", "ed25519", "ping", "identify", "gossipsub", "tcp", "yamux", "noise", "quic", "macros", "serde"]}
+libp2p-webrtc = {workspace = true, features = ["tokio"]}
+tokio = {workspace = true, features = ["sync", "macros", "rt-multi-thread"]}
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+async_wasm_task.workspace = true
+libp2p = {workspace = true, features = ["ed25519", "tcp", "ping", "identify", "gossipsub", "yamux", "noise", "quic", "macros", "wasm-bindgen", "serde"]}
+libp2p-webrtc-websys = {workspace = true}
+wasm-bindgen-futures.workspace = true
+wasm-bindgen.workspace = true
+web-sys = {workspace = true, features = ["Window", "Performance"]}
+js-sys.workspace = true
+
+[dev-dependencies]
+tracing-test.workspace = true
+
+[lints]
+workspace = true

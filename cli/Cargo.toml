@@ -1,0 +1,29 @@
+[package]
+name = "eve"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+# local
+cli_utils.workspace = true
+orchestrator_client = {workspace = true, features = ["time"]}
+types.workspace = true
+
+# crate
+clap = {workspace = true, features = ["derive"]}
+color-eyre.workspace = true
+crypto.workspace = true
+home.workspace = true
+jwt.workspace = true
+libp2p.workspace = true
+rustyline.workspace = true
+serde = {workspace = true, features = ["derive"]}
+serde_json.workspace = true
+serde_yaml.workspace = true
+termion.workspace = true
+tokio = {workspace = true, features = ["macros", "rt-multi-thread"]}
+tracing-subscriber = {workspace = true, features = ["fmt", "env-filter"]}
+tracing.workspace = true
+url.workspace = true

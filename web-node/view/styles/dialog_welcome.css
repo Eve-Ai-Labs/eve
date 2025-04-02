@@ -1,0 +1,47 @@
+#win_welcome.modal > .content {
+  max-width: 615px;
+}
+#win_welcome #сonnection_selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+#win_welcome #сonnection_selection a,
+#win_welcome #сonnection_selection button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: calc(50% - 15px);
+  height: auto;
+  border: 1px solid var(--border-primary);
+  padding: 15px;
+  text-align: center;
+  color: var(--default-text-color);
+  text-decoration: none;
+}
+#win_welcome #сonnection_selection a:hover,
+#win_welcome #сonnection_selection button:hover {
+  border-color: var(--link-hover-text-color);
+  color: var(--link-hover-text-color);
+}
+
+#win_welcome #сonnection_selection .title {
+  margin: 15px 0 0;
+}
+#win_welcome #сonnection_selection svg {
+  width: 80%;
+  margin: 0 auto;
+}
+#win_welcome #сonnection_selection .web svg * {
+  fill: var(--default-text-color);
+}
+#win_welcome #сonnection_selection .web:hover svg * {
+  fill: var(--link-hover-text-color);
+}
+#win_welcome #сonnection_selection .cli svg * {
+  stroke: var(--default-text-color);
+}
+#win_welcome #сonnection_selection .cli:hover svg * {
+  stroke: var(--link-hover-text-color);
+}

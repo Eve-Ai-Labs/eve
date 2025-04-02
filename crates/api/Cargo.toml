@@ -1,0 +1,40 @@
+[package]
+edition.workspace = true
+license.workspace = true
+name = "orchestrator_api"
+version.workspace = true
+
+[dependencies]
+# local
+crypto.workspace = true
+node-config.workspace = true
+orchestrator = {workspace = true, features = ["err_poem"]}
+storage = {workspace = true, features = ["err_poem"]}
+types.workspace = true
+metrics.workspace = true
+p2p.workspace = true
+
+arc-swap.workspace = true
+dashmap.workspace = true
+eyre.workspace = true
+jwt.workspace = true
+poem = {workspace = true, features = ["tower-compat"]}
+ratelimit.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tokio.workspace = true
+tracing-subscriber = {workspace = true, features = ["fmt"]}
+tracing.workspace = true
+
+[dev-dependencies]
+# local
+orchestrator = {workspace = true, features = ["err_poem", "mock"]}
+p2p.workspace = true
+
+poem = {workspace = true, features = ["test"]}
+rocksdb.workspace = true
+tempfile.workspace = true
+tracing-test.workspace = true
+
+[lints]
+workspace = true

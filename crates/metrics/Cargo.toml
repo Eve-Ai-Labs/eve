@@ -1,0 +1,14 @@
+[package]
+name = "metrics"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+opentelemetry.workspace = true
+opentelemetry_sdk.workspace = true
+async-trait.workspace = true
+tracing.workspace = true
+
+types.workspace = true

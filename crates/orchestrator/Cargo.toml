@@ -1,0 +1,40 @@
+[package]
+name = "orchestrator"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[dependencies]
+ai.workspace = true
+crypto.workspace = true
+eyre.workspace = true
+futures.workspace = true
+multiaddr.workspace = true
+node-config.workspace = true
+p2p.workspace = true
+rand.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+storage.workspace = true
+thiserror.workspace = true
+tokio = {workspace = true, features = ["sync", "rt", "time", "macros"]}
+tracing.workspace = true
+types.workspace = true
+hex.workspace = true
+opentelemetry.workspace = true
+opentelemetry_sdk.workspace = true
+async-trait.workspace = true
+metrics.workspace = true
+
+poem = {workspace = true, optional = true}
+
+[dev-dependencies]
+tempdir.workspace = true
+
+[features]
+err_poem = ["dep:poem"]
+mock = []
+
+[lints]
+workspace = true

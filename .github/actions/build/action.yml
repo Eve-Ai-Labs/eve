@@ -1,0 +1,50 @@
+name: Build binary
+runs:
+  using: "composite"
+  steps:
+    
+    - name: Determine Release Version and Variables
+      shell: bash
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          RELEASE_VERSION="${{ github.event.inputs.release_version }}"
+        else
+          CARGO_PATH="Cargo.toml"
+          VERSION=$(sed -n '/^\w*version = /p' "$CARGO_PATH" | sed 's/^.*=[ ]*"//g' | sed 's/".*$//g')
+          RELEASE_VERSION="v$VERSION"
+        fi
+        echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_ENV
+        echo "ARCH=$(uname -m)" >> $GITHUB_ENV
+
+    - name: Rustup
+      shell: bash
+      run: rustup update $RUST_VERSION && rustup default $RUST_VERSION
+
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y build-essential pkg-config libssl-dev libclang-dev zip
+
+    - name: Install dependencies (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      run: brew install llvm zip
+
+    - name: Build
+      shell: bash
+      run: cargo build --release -p eve-node -p eve
+
+    - name: Sign binaries (macOS)
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        codesign --sign - target/release/eve-node
+        codesign --sign - target/release/eve
+
+    - name: Archive
+      shell: bash
+      run: |
+        cd target/release
+        zip eve-node-$RELEASE_VERSION-$PLATFORM_NAME-$ARCH.zip eve-node
+        zip eve-cli-$RELEASE_VERSION-$PLATFORM_NAME-$ARCH.zip eve
+        mv eve-node-$RELEASE_VERSION-$PLATFORM_NAME-$ARCH.zip eve-cli-$RELEASE_VERSION-$PLATFORM_NAME-$ARCH.zip ../..

@@ -1,0 +1,57 @@
+[package]
+name = "web-node"
+
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+ai = {workspace = true}
+crypto.workspace = true
+events.workspace = true
+futures.workspace = true
+node.workspace = true
+orchestrator_client.workspace = true
+p2p.workspace = true
+types.workspace = true
+
+eyre.workspace = true
+hex.workspace = true
+libp2p = {workspace = true, features = ["ed25519", "macros", "ping", "wasm-bindgen"]}
+libp2p-webrtc-websys.workspace = true
+multiaddr.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+tracing.workspace = true
+url.workspace = true
+
+async_wasm_task.workspace = true
+js-sys.workspace = true
+serde-wasm-bindgen.workspace = true
+tracing-wasm.workspace = true
+wasm-bindgen-futures.workspace = true
+wasm-bindgen.workspace = true
+web-sys = {workspace = true, features = [
+  "Window",
+  "Storage",
+  "Worker",
+  "WorkerType",
+  "MessageEvent",
+  "Blob",
+  "BlobPropertyBag",
+  "Url",
+  "WorkerOptions",
+  "Window",
+  "Response",
+  "RequestInit",
+  "Headers",
+  "Request",
+  "ServiceWorkerGlobalScope",
+  "CustomEvent",
+]}
+
+[lints]
+workspace = true

@@ -1,0 +1,11 @@
+[package]
+edition.workspace = true
+name = "cli_utils"
+version.workspace = true
+license.workspace = true
+
+[dependencies]
+clap = {workspace = true, features = ["derive"]}
+
+[lints]
+workspace = true
