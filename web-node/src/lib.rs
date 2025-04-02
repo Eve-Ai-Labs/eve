@@ -243,11 +243,11 @@ impl WebNode {
                 }
             } else if let Some(form) = get_whitelist_form() {
                 return Err(format!(
-                    "Please add the node {key} to the whitelist first <a href=\"{form}?key={key}\" target=\"_blank\">{form}</a>",
+                    "Please add the node {key}\n to the whitelist first <a href=\"{form}?key={key}\" target=\"_blank\">{form}</a>",
                 ))
                 .error_to_js();
             } else {
-                return Err(format!("Please add the node {key} to the whitelist first.",))
+                return Err(format!("Please add the node {key}\n to the whitelist first.",))
                     .error_to_js();
             }
             sleep(std::time::Duration::from_secs(1)).await;
