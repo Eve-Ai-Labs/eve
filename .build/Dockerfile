@@ -3,14 +3,17 @@ ARG WHITELIST_FORM
 ARG ORCHESTRATOR_RPC
 ENV PATH="${PATH}:/root/.cargo/bin"
 WORKDIR /opt/app
-RUN apt update && apt install -y curl build-essential pkg-config libssl-dev libclang-dev clang
+RUN apt update && \
+	apt install -y curl build-essential pkg-config libssl-dev libclang-dev clang
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 RUN rustup update nightly && \
 	rustup update stable && \
 	rustup target add wasm32-unknown-unknown && \
 	cargo install wasm-pack
-COPY . . 
-RUN cargo build --release
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
+	apt-get install -y nodejs
+COPY . .
+RUN npm install webpack webpack-cli sass-loader sass css-loader style-loader --save-dev
 RUN make build-web-node
 
 FROM ubuntu:22.04 AS node

@@ -19,7 +19,7 @@ OUTPUT_DIR='./web-node-static'
 SOURCE_WEB_NODE_DIR='./web-node'
 
 build-web-node:
-	cd ${SOURCE_WEB_NODE_DIR}; make install; make build
+	cd ${SOURCE_WEB_NODE_DIR}; make build
 	rm -rf ${OUTPUT_DIR} || true
 	cp -r ${SOURCE_WEB_NODE_DIR}/view ${OUTPUT_DIR}
 	find ${OUTPUT_DIR} -type f -iregex '.*\.\(js\|html\|css\)' -print  -exec sed -i -E 's/\?b\=[0-9]{10,}/?b=${NOW}/g' {} \;
