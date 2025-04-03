@@ -13,20 +13,12 @@ fix:
 build: build-web-node
 	cargo build
 
-
-NOW:=$(shell date +%Y%m%d%H%M%S)
 OUTPUT_DIR='./web-node-static'
 SOURCE_WEB_NODE_DIR='./web-node'
 
 build-web-node:
-	cd ${SOURCE_WEB_NODE_DIR}; make build
+	cd ${SOURCE_WEB_NODE_DIR}; make build-static
 	rm -rf ${OUTPUT_DIR} || true
-	cp -r ${SOURCE_WEB_NODE_DIR}/view ${OUTPUT_DIR}
-	find ${OUTPUT_DIR} -type f -iregex '.*\.\(js\|html\|css\)' -print  -exec sed -i -E 's/\?b\=[0-9]{10,}/?b=${NOW}/g' {} \;
-	sed -i -E s/\'webnode__web_bg.wasm\'/\'webnode__web_bg.wasm?b=${NOW}\'/g ${OUTPUT_DIR}/wasm/webnode__web.js
-	cd ${OUTPUT_DIR}; npm run build
-	mv ${OUTPUT_DIR}/dist/* ${OUTPUT_DIR}
-	sed -i -E s/\<link[[:space:]]*rel=\"stylesheet\".*//g ${OUTPUT_DIR}/index.html
-	sed -i -E s#/scripts/index.js#bundle.js#g ${OUTPUT_DIR}/index.html
+	mv ${SOURCE_WEB_NODE_DIR}/view/dist ${OUTPUT_DIR}
 
 
