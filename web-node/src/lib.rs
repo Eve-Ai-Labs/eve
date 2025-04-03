@@ -247,8 +247,10 @@ impl WebNode {
                 ))
                 .error_to_js();
             } else {
-                return Err(format!("Please add the node {key}\n to the whitelist first.",))
-                    .error_to_js();
+                return Err(format!(
+                    "Please add the node {key}\n to the whitelist first.",
+                ))
+                .error_to_js();
             }
             sleep(std::time::Duration::from_secs(1)).await;
 

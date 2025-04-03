@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 #win_welcome.modal > .content {
   max-width: 615px;
 }

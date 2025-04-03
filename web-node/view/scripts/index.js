@@ -1,15 +1,20 @@
-import "/scripts/icons.js?b=00000000000000";
 import "/scripts/ai.js?b=00000000000000";
 
 import { sleep } from "/scripts/lib.js?b=00000000000000";
 import { init as init_head } from "/scripts/head/index.js?b=00000000000000";
+import { init as init_section } from "/scripts/section/mod.js?b=00000000000000";
 import { init as init_welcome } from "/scripts/welcome.js?b=00000000000000";
 import { init as init_console } from "/scripts/console.js?b=00000000000000";
 import init, { WebNode } from "/wasm/webnode__web.js?b=00000000000000";
 
 async function run() {
   await init_web_node();
-  await Promise.all([init_head(), init_welcome(), init_console()]);
+  await Promise.all([
+    init_head(),
+    init_section(),
+    init_welcome(),
+    init_console(),
+  ]);
 }
 
 async function init_web_node() {

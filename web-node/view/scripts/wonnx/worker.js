@@ -4,7 +4,7 @@ import {
   AutoModelForCausalLM,
   TextStreamer,
   InterruptableStoppingCriteria,
-} from "/scripts/transformers/transformers.min.js";
+} from "/scripts/transformers/transformers.min.js?b=00000000000000";
 
 const WONNX_LOADING = "wonnx.loading";
 const WONNX_LOADING_STARTED = "wonnx.started";

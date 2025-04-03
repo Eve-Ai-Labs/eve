@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 #dialog_settings .bd .row.private_key label input {
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;

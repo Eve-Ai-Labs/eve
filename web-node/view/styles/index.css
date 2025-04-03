@@ -4,9 +4,11 @@
 @import url("/styles/dialog_settings.css?b=00000000000000");
 @import url("/styles/dialog_welcome.css?b=00000000000000");
 @import url("/styles/console.css?b=00000000000000");
+@import url("/styles/header.css?b=00000000000000");
+@import url("/styles/section.css?b=00000000000000");
 
 :root {
-  --header-height: 60px;
+  --header-height: 45px;
   --footer-height: 60px;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
@@ -204,135 +206,11 @@ input[type="text"].error {
   opacity: 0.6;
 }
 
-header {
-  width: 100%;
-  overflow-x: hidden;
-  height: var(--header-height);
-  border-bottom: 1px solid var(--border-primary);
-}
-header nav,
-header nav ul {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-header a {
-  text-decoration: none;
-}
-header svg {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  margin-right: 3px;
-  display: inline-block;
-  vertical-align: middle;
-}
-header svg,
-header svg * {
-  stroke: var(--default-text-color);
-  stroke-width: 2px;
-}
-header nav ul {
-  align-items: center;
-  list-style: none;
-}
-header nav ul li {
-  margin: 0;
-  padding: 0;
-  margin: 5px 15px;
-}
-header nav ul li a:hover svg,
-header nav ul li a:hover svg * {
-  stroke: var(--link-hover-text-color);
-}
-header nav ul li.balance {
-  cursor: pointer;
-}
-header nav ul li.ai-model {
-  margin-right: 5px;
-  display: flex;
-  align-items: center;
-}
-header nav ul li.ai-model svg {
-  bottom: 0;
-  width: auto;
-  height: 25px;
-  stroke-width: 2px;
-}
-header nav ul li.ai-model svg.ai-icon {
-  bottom: -2px;
-}
-header nav ul li.ai-model svg * {
-  stroke-width: 1px;
-}
-
-header nav ul li.ai-model progress {
-  width: 250px;
-  margin-right: 15px;
-}
-header nav ul li.ai-model .network {
-  display: flex;
-  align-items: center;
-  margin-right: 5px;
-}
-header nav ul li.ai-model .network span {
-  margin-right: 5px;
-}
-
-header nav ul li.ai-model button {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  width: auto;
-  height: auto;
-}
-header nav ul li.ai-model button.ai-stop svg {
-  height: 37px;
-}
-header nav ul li.ai-model button.ai-stop svg * {
-  fill: rgb(210, 21, 21);
-}
-header nav ul li.ai-model button.ai-stop:disabled svg * {
-  fill: var(--default-text-color);
-}
-header nav ul li.ai-model button.ai-start svg * {
-  fill: rgb(3, 87, 3);
-  stroke: rgb(3, 87, 3);
-}
-header nav ul li.ai-model button.ai-start:disabled svg * {
-  fill: var(--default-text-color);
-  stroke: var(--default-text-color);
-}
-
-header nav ul li.request-counter svg {
-  width: 20px;
-  height: 20px;
-}
-header nav ul li.request-counter svg,
-header nav ul li.request-counter svg * {
-  fill: var(--default-text-color);
-  stroke: transparent;
-}
-header nav ul li.connect-status span.offline {
-  color: var(--log-color);
-}
-header nav ul li.connect-status span.online {
-  color: var(--info-color);
-}
-
 main {
   height: calc(100vh - var(--footer-height) - var(--header-height));
   padding: 15px;
   width: 100%;
   overflow-x: hidden;
-}
-main h3 {
-  display: block;
-  height: 40px;
-  margin: 0;
-  padding: 0 15px;
 }
 
 footer {

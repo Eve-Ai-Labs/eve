@@ -26,7 +26,6 @@ function console_status(value) {
       : CONSOLE_STATUS != null
       ? CONSOLE_STATUS
       : localStorage.getItem("console_status") == "true";
-  console.log(status);
   status = status != null ? status && true : true;
 
   CONSOLE_STATUS = status;

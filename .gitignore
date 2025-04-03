@@ -8,3 +8,4 @@ db
 .DS_Store
 fiveserver.config.js
 web-node-static
+**/node_modules

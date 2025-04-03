@@ -45,7 +45,7 @@ const MODAL_ID = "dialog_settings",
 let SETTINGS_BUTTON;
 
 export async function init() {
-  SETTINGS_BUTTON = document.querySelector("header nav ul li.settings button");
+  SETTINGS_BUTTON = document.querySelector("#nav-settings button");
   if (!SETTINGS_BUTTON) {
     return console.error("Settings button not found");
   }

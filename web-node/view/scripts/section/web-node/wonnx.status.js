@@ -4,8 +4,7 @@ const EVENTNAME_WONNX_STATUS = "web-node.status";
 let STATUS_BLOCK;
 
 export async function init() {
-  STATUS_BLOCK = document.querySelector(".connect-status span");
-  console.log(STATUS_BLOCK);
+  STATUS_BLOCK = document.getElementById("node-status");
   if (!STATUS_BLOCK) {
     throw new Error("Status block not found");
   }

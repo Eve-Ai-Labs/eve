@@ -23,9 +23,12 @@ fix:
 	cargo clippy -p web-node --fix --no-deps --allow-dirty --allow-staged
 	cargo +nightly fmt 	-p web-node
 
-# install wasm-pack
+# install wasm-pack + webpack
 install:
 	cargo install wasm-pack --force
+	cd view; \
+		npm install webpack webpack-cli --save-dev; \
+		npm install sass-loader sass css-loader style-loader --save-dev
 	# curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
 
 test:
