@@ -173,7 +173,7 @@ impl TryFrom<MessageEvent> for WonnxMessage {
                         if output.is_empty() {
                             return Err(eyre::eyre!("Empty output"));
                         }
-                        let tokens = output.iter().map(|s| s.len()).sum::<usize>() as u64;
+                        let tokens = get_f64_value(&data, "numTokens").unwrap_or(0.0) as u64;
                         Ok(WonnxMessage::Generate(GenerateStatus::Done(Answer {
                             message: output.remove(0),
                             tokens,
