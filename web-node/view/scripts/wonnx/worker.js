@@ -127,6 +127,7 @@ async function generate(messages) {
   self.postMessage({
     tp: WONNX_GENERATE,
     progress_type: WONNX_GENERATE_COMPLETE,
+    numTokens,
     output: decoded,
   });
 }
