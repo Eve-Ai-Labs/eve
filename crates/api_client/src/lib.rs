@@ -1,7 +1,10 @@
 use crypto::ed25519::{private::PrivateKey, public::PublicKey};
 use eyre::{bail, eyre, Context, ContextCompat, Result};
 use jwt::JwtSecret;
-use reqwest::{header::AUTHORIZATION, Url};
+use reqwest::{
+    header::{AUTHORIZATION, CACHE_CONTROL},
+    Url,
+};
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "time")]
 use std::time::Duration;
@@ -20,6 +23,7 @@ use types::{
 #[derive(Clone)]
 pub struct Client {
     rpc: Arc<Url>,
+    client: reqwest::Client,
 }
 
 impl Client {
@@ -29,17 +33,17 @@ impl Client {
         <U as TryInto<Url>>::Error: std::fmt::Debug,
     {
         let rpc = url.try_into().map_err(|err| eyre!("{err:?}"))?;
+        let mut default_headers = reqwest::header::HeaderMap::new();
+        default_headers.insert(CACHE_CONTROL, "no-cache".parse().unwrap());
+        let client = reqwest::Client::builder()
+            .default_headers(default_headers)
+            .build()
+            .map_err(|err| eyre!("{err:?}"))?;
 
-        Ok(Self { rpc: Arc::new(rpc) })
-    }
-
-    #[instrument(level = "debug", skip_all)]
-    pub async fn history<S: Display>(&mut self, query: S) -> Result<Vec<History>> {
-        debug!("last query: {query}");
-
-        self.get(format!("/history/{query}"))
-            .await
-            .context("Error when receiving the history")
+        Ok(Self {
+            rpc: Arc::new(rpc),
+            client,
+        })
     }
 
     pub async fn send<S, T, R>(&self, suff: S, request: &T) -> Result<R>
@@ -49,7 +53,7 @@ impl Client {
         R: for<'de> serde::Deserialize<'de>,
     {
         let url = self.rpc.join(suff.as_ref())?;
-        reqwest::Client::new()
+        self.client
             .post(url)
             .json(request)
             .send()
@@ -66,13 +70,24 @@ impl Client {
         S: AsRef<str>,
         R: for<'de> serde::Deserialize<'de>,
     {
-        reqwest::get(self.rpc.join(suff.as_ref())?)
+        self.client
+            .get(self.rpc.join(suff.as_ref())?)
+            .send()
             .await
             .context("Request error")?
             .error_for_status()?
             .json()
             .await
             .context("Couldn't get a response")
+    }
+
+    #[instrument(level = "debug", skip_all)]
+    pub async fn history<S: Display>(&mut self, query: S) -> Result<Vec<History>> {
+        debug!("last query: {query}");
+
+        self.get(format!("/history/{query}"))
+            .await
+            .context("Error when receiving the history")
     }
 
     #[instrument(level = "debug", skip_all)]
