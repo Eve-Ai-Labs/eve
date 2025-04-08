@@ -9,15 +9,15 @@
   top: auto;
   right: auto;
 
-  height: 265px;
+  height: var(--consile-max-size);
   width: 100vw;
   background: var(--default-bg);
   padding: 15px 35px 15px 15px;
   overflow: hidden;
   border-top: 1px solid var(--border-primary);
 }
-#console.status_close {
-  height: 52px;
+.console_status_close #console {
+  height: var(--consile-min-size);
   padding: 5px 35px 5px 15px;
 }
 
@@ -37,15 +37,15 @@
   background-color: var(--default-bg);
   cursor: pointer;
 }
-#console.status_close .switch {
+.console_status_close #console .switch {
   top: 5px;
 }
-#console.status_open .switch div {
+.console_status_open #console .switch div {
   background-color: var(--border-primary);
   width: 70%;
   height: 2px;
 }
-#console.status_close .switch div {
+.console_status_close #console .switch div {
   border: 2px solid var(--border-primary);
   width: 70%;
   height: 70%;
@@ -55,10 +55,10 @@
   border-color: var(--default-bg);
   background-color: var(--border-primary);
 }
-#console.status_open .switch:hover div {
+.console_status_open #console .switch:hover div {
   background-color: var(--default-bg);
 }
-#console.status_close .switch:hover div {
+.console_status_close #console .switch:hover div {
   border-color: var(--default-bg);
 }
 

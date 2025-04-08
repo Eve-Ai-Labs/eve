@@ -5586,6 +5586,7 @@ dependencies = [
  "crypto",
  "eyre",
  "hex",
+ "js-sys",
  "multiaddr",
  "rand 0.8.5",
  "serde",

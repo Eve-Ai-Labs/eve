@@ -5,7 +5,7 @@
 @import url("/styles/dialog_welcome.css?b=00000000000000");
 @import url("/styles/console.css?b=00000000000000");
 @import url("/styles/header.css?b=00000000000000");
-@import url("/styles/section.css?b=00000000000000");
+@import url("/styles/section/mod.css?b=00000000000000");
 
 :root {
   --header-height: 45px;
@@ -48,6 +48,9 @@
   --light-dark: hsl(0, 0%, 34%);
   --color-3: hsl(240, 1%, 29%);
   --color-2: hsl(240, 1%, 24%);
+
+  --consile-max-size: 265px;
+  --consile-min-size: 52px;
 }
 
 html,

@@ -2,8 +2,12 @@ import "/scripts/lib.js?b=00000000000000";
 
 const MAX_ITEM = 300,
   STATUS_TITLE = { false: "Open the console", true: "Minimize the console" },
-  STATUS_CLASS = { false: "status_close", true: "status_open" };
-let CONSOLE_BLOCK = document.getElementById("console"),
+  STATUS_CLASS = {
+    false: "console_status_close",
+    true: "console_status_open",
+  };
+let MAIN_BLOCK = document.querySelector("main"),
+  CONSOLE_BLOCK = document.getElementById("console"),
   SWITCH_BUTTON = CONSOLE_BLOCK.querySelector(".switch"),
   MESSAGE_BLOCK = CONSOLE_BLOCK.querySelector(".bd"),
   // null = default
@@ -31,8 +35,8 @@ function console_status(value) {
   CONSOLE_STATUS = status;
   localStorage.setItem("console_status", status);
 
-  CONSOLE_BLOCK.removeClass(STATUS_CLASS[!status]);
-  CONSOLE_BLOCK.addClass(STATUS_CLASS[status]);
+  MAIN_BLOCK.removeClass(STATUS_CLASS[!status]);
+  MAIN_BLOCK.addClass(STATUS_CLASS[status]);
   SWITCH_BUTTON.attr("title", STATUS_TITLE[status]);
 }
 

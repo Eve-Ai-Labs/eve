@@ -1,5 +1,5 @@
 const ITEM_VALUE = document.querySelector("header .balance .value"),
-  EVENTNAME_SETTINGS_CHANGED = "settings.changed";
+  EVENTNAME_WASM_INIT = "wasm.init";
 
 let LOCK = false;
 
@@ -8,7 +8,7 @@ export async function init() {
     e.stopPropagation();
     update_balance();
   });
-  window.on(EVENTNAME_SETTINGS_CHANGED, async (e) => {
+  window.on(EVENTNAME_WASM_INIT, async (e) => {
     await update_balance();
   });
 
@@ -18,8 +18,14 @@ export async function init() {
 
 async function update_balance() {
   if (LOCK) return;
+
+  if (!window.eve_client) {
+    ITEM_VALUE.innerHTML = 0;
+    LOCK = false;
+    return;
+  }
   try {
-    let balance = await window.web_node.balance();
+    let balance = await window.eve_client.balance();
     ITEM_VALUE.innerHTML = balance;
     console.log("Balance: ", balance);
   } finally {

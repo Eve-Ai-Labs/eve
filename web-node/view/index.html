@@ -21,7 +21,6 @@
     <meta property="twitter:image" content="/images/og-preview.png?b=00000000000000" />
 
     <link rel="stylesheet" href="/styles/index.css?b=00000000000000" />
-
     <script type="module" src="/scripts/index.js?b=00000000000000"></script>
 </head>
 
@@ -83,8 +82,8 @@
             </li>
         </ul>
     </header>
-    <main>
-        <section id="web-node" class="tab_body active">
+    <main class="console_status_open">
+        <section id="web-node" class="tab_body scroll active">
             <h1>Web NODE</h1>
             <table>
                 <tr>
@@ -122,17 +121,30 @@
                 </button>
             </div>
         </section>
-        <section id="chat" class="tab_body">
-            <div class="dev">
-                chat: In the process of development
+        <section id="chat" class="tab_body scroll">
+            <div class="answers scroll">
+                <div class="empty">The answers will appear here.</div>
+            </div>
+            <div class="ask">
+                <textarea id="question" class="ask"
+                    placeholder="Enter your question here. For example, how much is 2+2?" disabled></textarea>
+                <div class="col">
+                    <button id="send_question" title="Send a question" disabled>
+                        Send
+                    </button>
+                    <button id="clear_history" title="Clear the chat history" disabled>
+                        Сlear
+                    </button>
+                </div>
+
             </div>
         </section>
-        <section id="explorer" class="tab_body">
+        <section id="explorer" class="tab_body scroll">
             <div class="dev">
                 explorer: In the process of development
             </div>
         </section>
-        <section id="console" class="status_open">
+        <section id="console">
             <button class="switch" title="Minimize the console">
                 <div></div>
             </button>

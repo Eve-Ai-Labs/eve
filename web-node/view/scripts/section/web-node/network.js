@@ -1,7 +1,9 @@
 import "/scripts/lib.js?b=00000000000000";
 
+import { get_api } from "/wasm/webnode__web.js?b=00000000000000";
+
 export async function init() {
-  let api = await window.web_node.get_api();
+  let api = get_api();
   console.log("api", api);
 
   let networkName = document.getElementById("network-type");

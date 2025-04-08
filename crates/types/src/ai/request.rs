@@ -35,10 +35,7 @@ pub struct AiRequest {
 impl AiRequest {
     pub fn new(message: String, history: Vec<History>, pubkey: PublicKey) -> Self {
         Self {
-            timestamp: std::time::SystemTime::now()
-                .duration_since(std::time::UNIX_EPOCH)
-                .unwrap()
-                .as_secs(),
+            timestamp: now(),
             message,
             history,
             pubkey,
@@ -86,4 +83,17 @@ impl Display for Role {
             Role::System => write!(f, "system"),
         }
     }
+}
+
+#[cfg(not(target_arch = "wasm32"))]
+fn now() -> u64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_secs()
+}
+
+#[cfg(target_arch = "wasm32")]
+fn now() -> u64 {
+    (js_sys::Date::new_0().get_time() / 1000.0) as u64
 }

@@ -1,3 +1,4 @@
+pub mod client;
 mod env;
 pub(crate) mod log;
 pub(crate) mod results;
@@ -6,10 +7,10 @@ mod wonnx;
 
 use crate::{
     results::{ConvertWasmResult, ConvertWasmResultError, ToJsValue, WebResult},
-    settings::Settings,
+    settings::EveSettings,
 };
 use crypto::ed25519::public::PublicKey;
-use env::{get_api_orchestrator, get_whitelist_form};
+use env::get_whitelist_form;
 use events::loader::send_load_status;
 use futures::SinkExt;
 use node::{spawn_node, ToP2P};
@@ -20,68 +21,51 @@ use tracing::Level;
 use tracing_wasm::WASMLayerConfigBuilder;
 use types::p2p::EveMessage;
 use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
+use web_sys::Storage;
 use wonnx::Wonnx;
 
+// Called when the Wasm module is instantiated
+#[wasm_bindgen(start)]
+fn main() {
+    tracing_wasm::set_as_global_default_with_config(
+        WASMLayerConfigBuilder::new()
+            .set_max_level(Level::INFO)
+            .build(),
+    );
+}
+
 #[wasm_bindgen]
-pub struct WebNode {
-    settings: Settings,
+pub fn get_api() -> String {
+    env::get_api_orchestrator().to_string()
+}
+
+#[wasm_bindgen]
+pub struct EveNode {
+    settings: EveSettings,
     client: Option<ClientWithKey>,
     node: Option<Node>,
     wonnx: Arc<Wonnx>,
 }
 
 #[wasm_bindgen]
-impl WebNode {
+impl EveNode {
     pub async fn new() -> Result<Self, JsValue> {
-        tracing_wasm::set_as_global_default_with_config(
-            WASMLayerConfigBuilder::new()
-                .set_max_level(Level::INFO)
-                .build(),
-        );
         let wonnx = Arc::new(Wonnx::new()?);
 
+        let settings = EveSettings::load().await?;
         let mut web_node = Self {
-            settings: Settings::default(),
+            settings,
             client: None,
             node: None,
             wonnx,
         };
 
-        // settings
-        let _ = web_node
-            .settings
-            .load()
-            .await
-            .inspect_err(|err| debug!("{err:#?}"));
-
         // client
-        let _ = web_node
+        web_node
             .recreate_client()
-            .await
-            .inspect_err(|err| debug!("{err:#?}"));
+            .inspect_err(|err| debug!("{err:#?}"))?;
 
         Ok(web_node)
-    }
-
-    pub async fn get_settings(&self) -> WebResult {
-        self.settings.to_js()
-    }
-
-    pub async fn set_private_key(&mut self, settings: JsValue) -> WebResult {
-        let private_key = serde_wasm_bindgen::from_value(settings).error_to_js()?;
-        self.stop().await?;
-        self.settings.private_key = Some(private_key);
-        self.settings.save().await?;
-        self.recreate_client().await
-    }
-
-    pub async fn set_settings(&mut self, settings: JsValue) -> WebResult {
-        let settings = serde_wasm_bindgen::from_value(settings).error_to_js()?;
-
-        self.stop().await?;
-        self.settings = settings;
-        self.settings.save().await?;
-        self.recreate_client().await
     }
 
     pub async fn start(&mut self) -> WebResult {
@@ -89,7 +73,8 @@ impl WebNode {
             return Err("The node is already running").error_to_js();
         }
 
-        self.recreate_client().await?;
+        self.recreate_client()
+            .inspect_err(|err| debug!("{err:?}"))?;
         tracing::info!("Starting the node");
 
         let client = self
@@ -189,27 +174,9 @@ impl WebNode {
         self.node.is_some()
     }
 
-    pub async fn balance(&self) -> WebResult {
-        match &self.client {
-            Some(client) => client.balance().await.to_js(),
-            None => {
-                debug!("Configure the connection");
-                0.to_js()
-            }
-        }
-    }
-
-    async fn recreate_client(&mut self) -> WebResult {
-        if let Settings {
-            private_key: Some(key),
-        } = &self.settings
-        {
-            self.client =
-                Some(ClientWithKey::new(key.clone(), get_api_orchestrator()).error_to_js()?);
-        } else {
-            self.client = None
-        }
-        "".to_js()
+    fn recreate_client(&mut self) -> Result<(), JsValue> {
+        self.client = self.settings.client()?;
+        Ok(())
     }
 
     async fn load_model(&self) -> Result<(), JsValue> {
@@ -224,10 +191,6 @@ impl WebNode {
             .await?;
         tracing::info!("Model loaded");
         Ok(())
-    }
-
-    pub fn get_api(&self) -> String {
-        env::get_api_orchestrator().to_string()
     }
 
     async fn wait_connection(&self, key: PublicKey) -> Result<(), JsValue> {
@@ -274,4 +237,10 @@ impl Drop for Node {
     fn drop(&mut self) {
         self.p2p.close_channel();
     }
+}
+
+pub(crate) async fn storage() -> Result<Storage, JsValue> {
+    let win = web_sys::window().ok_or("window not found".to_js()?)?;
+    win.local_storage()?
+        .ok_or("local storage not found".to_js()?)
 }

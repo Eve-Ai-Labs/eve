@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+:root {
+  --ask-height: 100px;
+}
+
+#chat {
+  padding-left: 0;
+  padding-right: 0;
+}
+#chat .answers {
+  height: calc(100% - var(--ask-height) - 30px);
+  overflow: hidden auto;
+  padding: 0 30px 15px;
+  margin-bottom: 30px;
+}
+#chat .empty {
+  color: #999;
+}
+#chat br {
+  content: "";
+  flex: 0 0 100%;
+  height: 0;
+}
+#chat .row {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  margin: 60px 0;
+}
+#chat .question {
+  justify-content: end;
+}
+
+#chat .row .message {
+  position: relative;
+  max-width: 70%;
+  background: #ccc;
+  border: 1px solid;
+  border-radius: 8px;
+  min-width: 60px;
+}
+#chat .row .message::after,
+#chat .row .message::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+}
+#chat .question .message {
+  background-color: var(--log-background-color);
+  border: 1px solid var(--border-primary);
+}
+
+#chat .question .message::after,
+#chat .question .message::before {
+  clip-path: polygon(0% 100%, 25% 44%, 100% 44%);
+}
+#chat .question .message::after {
+  left: 8px;
+  bottom: -14px;
+  background-color: var(--log-background-color);
+}
+#chat .question .message::before {
+  left: 5px;
+  bottom: -17px;
+  background-color: var(--border-primary);
+}
+
+#chat .question .message .hd {
+  font-size: 12px;
+  position: absolute;
+  left: -40px;
+  top: 17px;
+}
+#chat .question .message .value {
+  padding: 15px;
+}
+
+#chat .answer {
+  flex-wrap: wrap;
+  justify-content: start;
+}
+#chat .answer .tb {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0 5px 10px 10px;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+#chat .answer .tb * {
+  font-size: 14px;
+  margin: 0 5px;
+}
+#chat .answer .tb .prev,
+#chat .answer .tb .next {
+  cursor: pointer;
+}
+
+#chat .answer .items {
+  width: 100%;
+}
+
+#chat .answer .message {
+  display: none;
+
+  padding: 15px;
+
+  background-color: var(--log-background-color);
+  border-color: var(--border-primary);
+  margin-bottom: 15px;
+}
+#chat .answer .message.active {
+  display: block;
+}
+
+#chat .answer .message::after,
+#chat .answer .message::before {
+  clip-path: polygon(100% 100%, 75% 44%, 0% 44%);
+}
+#chat .answer .message::after {
+  right: 8px;
+  bottom: -15px;
+  background-color: var(--log-background-color);
+}
+#chat .answer .message::before {
+  right: 6px;
+  bottom: -17px;
+  background-color: var(--border-primary);
+}
+
+#chat .answer .message .hd {
+  position: absolute;
+  width: 100px;
+  right: -120px;
+  top: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+#chat .answer .message .value {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap !important;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+}
+#chat .answer .gl-status {
+  display: block;
+  width: 100%;
+  color: var(--log-color);
+  font-size: 12px;
+  padding-left: 15px;
+}
+
+#chat .ask {
+  height: var(--ask-height);
+  margin: 0 30px;
+  display: flex;
+}
+#chat .ask textarea {
+  height: 100%;
+  border: 1px solid var(--border-primary);
+  border-radius: 4px;
+  margin: 0;
+  flex: 1 100%;
+  padding: 10px;
+}
+#chat .ask button {
+  margin: 0 15px 15px 15px;
+}

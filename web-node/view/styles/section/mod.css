@@ -1,21 +1,23 @@
 @charset "UTF-8";
+@import url("/styles/section/chat.css?b=00000000000000");
 
 main .tab_body {
   display: none;
-  min-height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  padding: 30px;
+  overflow: hidden auto;
+}
+main.console_status_open .tab_body {
+  height: calc(100% - var(--consile-max-size));
+}
+main.console_status_close .tab_body {
+  height: calc(100% - var(--consile-min-size));
 }
 main .tab_body.active {
   display: block;
 }
 
-main section {
-  width: 100%;
-  height: 100%;
-  padding: 30px;
-}
-main section h1 {
+main section.tab_body h1 {
   font-size: 24px;
   border-bottom: 1px solid var(--border-primary);
   margin-bottom: 15px;

@@ -70,8 +70,7 @@ export async function init() {
 
 async function open(key) {
   if (!key) {
-    let settings = await window.web_node.get_settings();
-    key = key ? key : settings.private_key;
+    key = key ? key : (await window.eve_settings.get()).private_key;
   }
 
   if (document.getElementById(MODAL_ID)) {
@@ -160,7 +159,7 @@ async function init_button_save(dialog) {
       return;
     }
 
-    await window.web_node
+    await window.eve_settings
       .set_private_key(input_key.value)
       .then((message) => {
         console.cn_info(message);
@@ -181,7 +180,6 @@ async function init_import_key(dialog) {
     reader.readAsText(file);
 
     dialog.addClass("load");
-    console.log("@todo");
 
     reader.onerror = function () {
       dialog.removeClass("load");

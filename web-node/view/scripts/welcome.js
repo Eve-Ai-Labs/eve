@@ -29,7 +29,7 @@ const MODAL_ID = "win_welcome",
   EVENTNAME_SETTINGS_CHANGED = "settings.changed";
 
 export async function init() {
-  let key = (await window.web_node.get_settings()).private_key;
+  let key = (await window.eve_settings.get()).private_key;
   let tag = window.location.href.match(/#welcome$/);
   if (key != undefined && !tag) {
     return;

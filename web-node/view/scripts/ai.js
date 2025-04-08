@@ -52,7 +52,7 @@ window.on(EVENTNAME_AI_START_CALL, async () => {
 
   try {
     LOADED = true;
-    await window.web_node.start();
+    await window.eve_node.start();
   } catch (err) {
     console.cn_error(err);
     window.trigger(EVENTNAME_AI_STOP_CALL);
@@ -62,7 +62,7 @@ window.on(EVENTNAME_AI_START_CALL, async () => {
 window.on(EVENTNAME_AI_STOP_CALL, async () => {
   if (!LOADED) return;
 
-  await window.web_node.stop_wait_disconnect();
+  await window.eve_node.stop_wait_disconnect();
   LOADED = false;
   window.trigger(EVENTNAME_AI_STOP);
 });
