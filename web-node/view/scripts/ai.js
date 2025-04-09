@@ -32,15 +32,23 @@ window.on(EVENTNAME_WONNX_LOADING_PROGRESS, (e) => {
 
   let download = ok.Download?.progress;
   if (download !== undefined) {
-    return window.trigger(EVENTNAME_AI_LOAD_PROGRESS, {
-      progress: download,
-    });
+    return window.trigger(
+      EVENTNAME_AI_LOAD_PROGRESS,
+      {
+        progress: download,
+      },
+      true
+    );
   }
   let progress = ok.Progress?.progress;
   if (progress !== undefined) {
-    return window.trigger(EVENTNAME_AI_LOAD_PROGRESS, {
-      progress,
-    });
+    return window.trigger(
+      EVENTNAME_AI_LOAD_PROGRESS,
+      {
+        progress,
+      },
+      true
+    );
   }
 });
 
