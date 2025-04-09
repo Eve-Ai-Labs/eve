@@ -317,8 +317,26 @@ class AnswerMessage {
     if (this.status_block.innerHTML != options.status) {
       this.status_block.innerHTML = options.status;
     }
+
     if (this.value_block.innerHTML != options.message) {
       this.value_block.innerHTML = options.message;
+    }
+
+    if (options.inspector) {
+      this.value_block.insertAdjacentHTML(
+        "beforeend",
+        `<div class="verified">
+          <p class="inspector"><span>Inspector:</span> ` +
+          options.inspector +
+          `</p>
+          <p class="relevance"><span>Relevance:</span> ` +
+          options.relevance +
+          `</p>
+          <p class="description"><span>Description:</span> ` +
+          options.description +
+          `</p>
+        </div>`
+      );
     }
   }
 
@@ -354,9 +372,6 @@ class AnswerStatus {
     this.status_block = this.block.querySelector(".status");
   }
   set(options) {
-    if (options.finished) {
-      return this.block.addClass("hide");
-    }
     if (this.status_block.innerHTML != options.status) {
       this.status_block.innerHTML = options.status;
     }

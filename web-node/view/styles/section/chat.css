@@ -147,6 +147,21 @@
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
 }
+#chat .answer .message .value .verified {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-primary);
+  white-space: normal;
+}
+#chat .answer .message .value .verified p {
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+}
+#chat .answer .message .value .verified p span {
+  font-weight: bold;
+}
+
 #chat .answer .gl-status {
   display: block;
   width: 100%;

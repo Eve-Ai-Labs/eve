@@ -37,8 +37,6 @@ async function tracking_requests() {
 
     if (!TRACKING.length) break;
 
-    console.log(TRACKING);
-
     if (finished === response.length) {
       TRACKING[index] = null;
       window.trigger(EVENTNAME_CHAT_ASK_FINISHED, {
@@ -94,9 +92,9 @@ function parse_response(response) {
     let node_response = verified_response.material.node_response;
     return {
       // verified
-      description: node_response.description,
-      inspector: node_response.inspector,
-      relevance: node_response.relevance,
+      description: verified_response.description,
+      inspector: verified_response.inspector,
+      relevance: verified_response.relevance,
       // node
       node_id: node_response.pubkey,
       finished: true,
