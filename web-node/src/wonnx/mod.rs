@@ -136,7 +136,7 @@ impl Ai for Wonnx {
                 let end = now_secs();
 
                 crate::info!(
-                    "Request processed in {}s, request length:{} answer length: {} answer cost: {}",
+                    "Request processed in {}s, request length: {} answer length: {} answer cost: {}",
                     end - start,
                     request_len,
                     answer.message.len(),
