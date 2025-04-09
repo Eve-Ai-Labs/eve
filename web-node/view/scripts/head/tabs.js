@@ -31,6 +31,8 @@ function set_tab(tab) {
     button.value == tab
       ? button.addClass("active")
       : button.removeClass("active");
+
+    button.disabled = false;
   });
 
   document.querySelectorAll("button.tablink").forEach((button) => {});

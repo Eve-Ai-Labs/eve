@@ -4,7 +4,8 @@ const ITEM_VALUE = document.querySelector("header .balance .value"),
 let LOCK = false;
 
 export async function init() {
-  document.querySelector("header .balance").addEventListener("click", (e) => {
+  let button = document.querySelector("header .balance");
+  button.addEventListener("click", (e) => {
     e.stopPropagation();
     update_balance();
   });
@@ -13,6 +14,7 @@ export async function init() {
   });
 
   update_balance();
+  button.disabled = false;
   setInterval(update_balance, 60000);
 }
 

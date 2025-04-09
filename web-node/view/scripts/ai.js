@@ -11,7 +11,8 @@ const EVENTNAME_SETTINGS_CHANGED = "settings.changed",
   EVENTNAME_AI_STOP_CALL = "ai.call.stop",
   EVENTNAME_AI_STOP = "ai.stop";
 
-let LOADED = false;
+let LOADED = false,
+  STOP;
 
 window.on(EVENTNAME_WONNX_LOADING_PROGRESS, (e) => {
   let ok = e.detail?.Ok;
@@ -19,7 +20,7 @@ window.on(EVENTNAME_WONNX_LOADING_PROGRESS, (e) => {
     console.error(e.detail);
     return window.trigger(EVENTNAME_AI_STOP_CALL);
   }
-
+  if (STOP) return;
   if (ok == "Start") {
     return window.trigger(EVENTNAME_AI_LOADING);
   }
@@ -53,6 +54,7 @@ window.on(EVENTNAME_WONNX_LOADING_PROGRESS, (e) => {
 });
 
 window.on(EVENTNAME_AI_START_CALL, async () => {
+  STOP = false;
   if (LOADED) {
     return console.error("The AI has already been launched");
   }
@@ -68,11 +70,13 @@ window.on(EVENTNAME_AI_START_CALL, async () => {
 });
 
 window.on(EVENTNAME_AI_STOP_CALL, async () => {
+  STOP = true;
   if (!LOADED) return;
 
   await window.eve_node.stop_wait_disconnect();
   LOADED = false;
   window.trigger(EVENTNAME_AI_STOP);
+  STOP = false;
 });
 
 window.on(EVENTNAME_SETTINGS_CHANGED, () => {

@@ -10,6 +10,10 @@ const EVENTNAME_AI_START = "ai.start",
   AI_LOAD_PROGRESS_BLOCK = document.getElementById("loading-model"),
   AI_LOAD_PROGRESS = AI_LOAD_PROGRESS_BLOCK.querySelector("progress");
 
+export function init() {
+  AI_START_BUTTON.disabled = false;
+}
+
 AI_START_BUTTON.addEventListener("click", async (e) => {
   e.stopPropagation();
   window.trigger(EVENTNAME_AI_START_CALL);
@@ -28,13 +32,17 @@ window.on(EVENTNAME_AI_START, () => {
   AI_STOP_BUTTON.removeClass("hide");
 });
 
-window.on(EVENTNAME_AI_STOP, () => {
-  AI_START_BUTTON.disabled = false;
-  AI_START_BUTTON.removeClass("hide");
+window.on(
+  EVENTNAME_AI_STOP,
+  () => {
+    AI_START_BUTTON.disabled = false;
+    AI_START_BUTTON.removeClass("hide");
 
-  AI_STOP_BUTTON.disabled = true;
-  AI_STOP_BUTTON.addClass("hide");
-});
+    AI_STOP_BUTTON.disabled = true;
+    AI_STOP_BUTTON.addClass("hide");
+  },
+  true
+);
 
 window.on(EVENTNAME_AI_LOADING, () => {
   AI_LOAD_PROGRESS_BLOCK.removeClass("hide");

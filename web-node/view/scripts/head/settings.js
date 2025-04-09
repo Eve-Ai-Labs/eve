@@ -66,6 +66,7 @@ export async function init() {
 
     await open().catch(console.cn_error);
   });
+  SETTINGS_BUTTON.disabled = false;
 }
 
 async function open(key) {
@@ -224,16 +225,6 @@ async function init_export_key(dialog) {
         this.attr("href", null);
       });
     });
-}
-
-function is_valid_url(url_string) {
-  let url;
-  try {
-    url = new URL(url_string);
-  } catch (e) {
-    return false;
-  }
-  return url.protocol === "http:" || url.protocol === "https:";
 }
 
 function dialog_validate_proc(input_key, button) {
