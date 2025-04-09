@@ -220,7 +220,7 @@ impl EveNode {
             try_count -= 1;
             if try_count == 0 {
                 return Err(format!(
-                    "No is already connected to the orchestrator: {}",
+                    "Node is already connected to the orchestrator: {}",
                     key
                 ))
                 .error_to_js();
