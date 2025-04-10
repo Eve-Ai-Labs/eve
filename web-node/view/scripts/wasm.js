@@ -6,6 +6,7 @@ import init, {
 import { sleep } from "/scripts/lib.js?b=00000000000000";
 
 const EVENTNAME_SETTINGS_CHANGED = "settings.changed",
+  EVENTNAME_SETTINGS_CHANGED_STORGE = "settings.changed.storage",
   EVENTNAME_WASM_INIT = "wasm.init";
 
 // window.eve_settings
@@ -18,6 +19,7 @@ export async function init_wasm() {
   await init_settings();
   await init_client();
   await init_web_node();
+
   window.trigger(EVENTNAME_WASM_INIT);
 }
 
@@ -34,7 +36,12 @@ async function init_web_node() {
     }
   }
   // patch: Error: recursive use of an object detected which would lead to unsafe aliasing in rust
-  let node = await EveNode.new();
+  let node;
+  try {
+    node = await EveNode.new();
+  } catch (e) {
+    return console.error(e);
+  }
   window.eve_node = add_lock_to_object(node);
 }
 
@@ -42,14 +49,15 @@ async function init_client() {
   if (!(await window.eve_settings.get()).private_key) {
     window.eve_client = null;
   }
-  let client = await EveClient.new();
+  let client;
+  try {
+    client = await EveClient.new();
+  } catch (e) {
+    return console.warn(e);
+  }
 
   window.eve_client = add_lock_to_object(client);
 }
-
-window.on(EVENTNAME_SETTINGS_CHANGED, init_web_node);
-window.on(EVENTNAME_SETTINGS_CHANGED, init_client);
-window.on(EVENTNAME_SETTINGS_CHANGED, init_settings);
 
 function add_lock_to_object(obj) {
   // patch: Error: recursive use of an object detected which would lead to unsafe aliasing in rust
@@ -86,3 +94,11 @@ function add_lock_to_object(obj) {
 
   return obj;
 }
+
+window.on(EVENTNAME_SETTINGS_CHANGED_STORGE, async () => {
+  await init_settings();
+
+  await init_client();
+  await init_web_node();
+  window.trigger(EVENTNAME_SETTINGS_CHANGED);
+});

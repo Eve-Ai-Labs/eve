@@ -38,7 +38,7 @@ const MODAL_ID = "dialog_settings",
     </div>
 </div>`,
   EVENTNAME_SETTINGS_OPEN_CALL = "settings.call.open",
-  EVENTNAME_SETTINGS_CHANGED = "settings.changed",
+  EVENTNAME_SETTINGS_CHANGED_STORAGE = "settings.changed.storage",
   EVENTNAME_AI_START = "ai.start",
   EVENTNAME_AI_STOP = "ai.stop";
 
@@ -164,7 +164,7 @@ async function init_button_save(dialog) {
       .set_private_key(input_key.value)
       .then((message) => {
         console.cn_info(message);
-        window.trigger(EVENTNAME_SETTINGS_CHANGED);
+        window.trigger(EVENTNAME_SETTINGS_CHANGED_STORAGE, {}, true);
       })
       .catch((e) => {
         console.cn_error("Error saving settings: ", e);

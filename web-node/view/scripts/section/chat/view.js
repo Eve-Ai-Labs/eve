@@ -5,6 +5,7 @@ const ANSWERS_BLOCK = document.querySelector("#chat .answers"),
   INPUT = document.getElementById("question"),
   SEND_BUTTON = document.getElementById("send_question"),
   CLEAR_BUTTON = document.getElementById("clear_history"),
+  EVENTNAME_SETTINGS_CHANGED = "settings.changed",
   EVENTNAME_WASM_INIT = "wasm.init",
   EVENTNAME_CHAT_CLEAR = "chat.clear",
   EVENTNAME_CHAT_CALL_ASK = "chat.call.ask",
@@ -43,12 +44,27 @@ let ANSWERS = [];
 export async function init() {
   let settings = await window.eve_settings.get();
   //
-  if (settings.private_key !== undefined) {
-    unlock_inputs();
+  if (settings.private_key === undefined) {
+    return;
   }
 
-  // history
-  let history = await self.eve_client.get_history();
+  await load_history();
+  unlock_inputs();
+}
+
+function unlock_inputs() {
+  INPUT.disabled = false;
+}
+async function load_history() {
+  ANSWERS_BLOCK.innerHTML = "";
+  let history;
+
+  try {
+    history = await window.eve_client.get_history();
+  } catch (e) {
+    return console.warn(e);
+  }
+
   if (history) {
     ANSWERS_BLOCK.querySelectorAll(".empty").forEach((e) => e.remove());
     history.map((item, i) => {
@@ -67,59 +83,9 @@ export async function init() {
     });
     ANSWERS_BLOCK.scrollTop = ANSWERS_BLOCK.scrollHeight;
     CLEAR_BUTTON.disabled = false;
+  } else {
+    ANSWERS_BLOCK.innerHTML = `<div class="empty">The answers will appear here.</div>`;
   }
-}
-
-INPUT.on(["change", "keyup"], () => {
-  SEND_BUTTON.disabled = !INPUT.value.trim();
-});
-INPUT.on("keyup", (e) => {
-  if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
-    SEND_BUTTON.click();
-  }
-});
-
-SEND_BUTTON.on("click", () => {
-  let value = INPUT.value.trim();
-  if (!value) {
-    return;
-  }
-  window.trigger(EVENTNAME_CHAT_CALL_ASK, value);
-});
-window.on(EVENTNAME_WASM_INIT, unlock_inputs);
-
-CLEAR_BUTTON.on("click", () => {
-  window.eve_client.clear_history();
-  CLEAR_BUTTON.disabled = true;
-  ANSWERS_BLOCK.innerHTML = `<div class="empty">The answers will appear here.</div>`;
-  ANSWERS = [];
-  window.trigger(EVENTNAME_CHAT_CLEAR);
-});
-
-window.on(EVENTNAME_CHAT_ASK_START, (e) => {
-  let value = e.detail.text,
-    id = e.detail.id;
-  ANSWERS_BLOCK.querySelectorAll(".empty").forEach((e) => e.remove());
-  INPUT.value = value;
-  INPUT.disabled = true;
-  SEND_BUTTON.disabled = true;
-  CLEAR_BUTTON.disabled = false;
-
-  draw_question(id, value);
-  draw_answer(id);
-});
-window.on([EVENTNAME_CHAT_ASK_FINISHED, EVENTNAME_CHAT_CLEAR], () => {
-  INPUT.value = "";
-  INPUT.disabled = false;
-  SEND_BUTTON.disabled = false;
-});
-
-window.on([EVENTNAME_CHAT_ASK_RESPONSE, EVENTNAME_CHAT_ASK_FINISHED], (e) => {
-  draw_answer(e.detail.id, e.detail.response);
-});
-
-function unlock_inputs() {
-  INPUT.disabled = false;
 }
 function draw_question(id, value) {
   let html = TEMPLATE_ASK.replaceAll("{{ID}}", id).replaceAll(
@@ -401,3 +367,52 @@ class AnswerStatus {
       .remove();
   }
 }
+
+INPUT.on(["change", "keyup"], () => {
+  SEND_BUTTON.disabled = !INPUT.value.trim();
+});
+INPUT.on("keyup", (e) => {
+  if ((e.keyCode == 10 || e.keyCode == 13) && e.ctrlKey) {
+    SEND_BUTTON.click();
+  }
+});
+
+SEND_BUTTON.on("click", () => {
+  let value = INPUT.value.trim();
+  if (!value) {
+    return;
+  }
+  window.trigger(EVENTNAME_CHAT_CALL_ASK, value);
+});
+window.on(EVENTNAME_WASM_INIT, unlock_inputs);
+
+CLEAR_BUTTON.on("click", async () => {
+  window.eve_client.clear_history();
+  CLEAR_BUTTON.disabled = true;
+  ANSWERS = [];
+  await load_history();
+  window.trigger(EVENTNAME_CHAT_CLEAR);
+});
+
+window.on(EVENTNAME_CHAT_ASK_START, (e) => {
+  let value = e.detail.text,
+    id = e.detail.id;
+  ANSWERS_BLOCK.querySelectorAll(".empty").forEach((e) => e.remove());
+  INPUT.value = value;
+  INPUT.disabled = true;
+  SEND_BUTTON.disabled = true;
+  CLEAR_BUTTON.disabled = false;
+
+  draw_question(id, value);
+  draw_answer(id);
+});
+window.on([EVENTNAME_CHAT_ASK_FINISHED, EVENTNAME_CHAT_CLEAR], () => {
+  INPUT.value = "";
+  INPUT.disabled = false;
+  SEND_BUTTON.disabled = false;
+});
+
+window.on([EVENTNAME_CHAT_ASK_RESPONSE, EVENTNAME_CHAT_ASK_FINISHED], (e) => {
+  draw_answer(e.detail.id, e.detail.response);
+});
+window.on(EVENTNAME_SETTINGS_CHANGED, load_history);
