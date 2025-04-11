@@ -14,7 +14,7 @@ env:
 jobs:
   checks:
     name: Checks
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       # rust toolchain
@@ -38,7 +38,7 @@ jobs:
 
   wasm:
     name: Wasm build
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       # cache
@@ -66,7 +66,7 @@ jobs:
 
   fmt:
     name: FMT with nightly
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       # rust toolchain
