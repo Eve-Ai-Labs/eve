@@ -81,6 +81,8 @@ jobs:
           restore-keys: ${{ runner.os }}-fmt-${{ hashFiles('**/Cargo.lock') }}
       - name: Install rustc nightly
         run: rustup update nightly
+      - name: Install fmt
+        run: rustup component add --toolchain nightly rustfmt
       # fmt
       - name: Run rustfmt in check mode
         run: cargo +nightly fmt --check --all
